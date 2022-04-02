@@ -1,6 +1,6 @@
 import { EntityRepository, Repository, Like } from 'typeorm';
 import { Users } from '../entities/users.entity';
-import { UsersData } from '../modules/users/users.dto';
+import { UserLogin, UsersData } from '../modules/users/users.dto';
 
 @EntityRepository(Users)
 export class UsersRepository extends Repository<Users> {
@@ -15,12 +15,25 @@ export class UsersRepository extends Repository<Users> {
     userName: string,
     offset: number,
     numRecords: number,
-  ): Promise<UsersData[]> {
-    const users = await this.find({
+  ): Promise<[UsersData[], number]> {
+    const users = await this.findAndCount({
+      select: ['userId', 'userName', 'firstName', 'lastName', 'address', 'age'],
       where: { userName: Like(`%${userName}%`) },
       order: { userId: 'ASC' },
       skip: offset,
       take: numRecords,
+    });
+    return users;
+  }
+
+  /**
+   *
+   * @param userName
+   * @returns
+   */
+  async getUserByName(userName: string): Promise<UserLogin> {
+    const users = await this.findOne({
+      where: { userName: userName },
     });
     return users;
   }

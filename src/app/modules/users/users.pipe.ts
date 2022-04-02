@@ -14,6 +14,10 @@ export class CreateUsersPipe extends JoiValidationPipe {
       Joi.object<CreateUserInputDto>({
         userName: Joi.string().required(),
         password: Joi.string().required(),
+        lastName: Joi.string().required(),
+        firstName: Joi.string().required(),
+        address: Joi.string().required(),
+        age: Joi.number().required().min(1),
       }),
     );
   }
@@ -33,7 +37,11 @@ export class UpdateUsersPipe extends JoiValidationPipe {
     super(
       Joi.object<UpdateUserInputDto>({
         userId: Joi.number().required(),
-        password: Joi.string().required(),
+        password: Joi.string(),
+        lastName: Joi.string(),
+        firstName: Joi.string(),
+        address: Joi.string(),
+        age: Joi.number().min(1),
       }),
     );
   }

@@ -18,6 +18,42 @@ export class Users {
   password: string;
 
   @Column({
+    name: 'lasst_name',
+    type: 'varchar',
+    length: 255,
+    default: null,
+    nullable: true,
+  })
+  lastName: string;
+
+  @Column({
+    name: 'first_name',
+    type: 'varchar',
+    length: 255,
+    default: null,
+    nullable: true,
+  })
+  firstName: string;
+
+  @Column({
+    name: 'address',
+    type: 'varchar',
+    length: 255,
+    default: null,
+    nullable: true,
+  })
+  address: string;
+
+  @Column({
+    name: 'age',
+    type: 'int',
+    unsigned: true,
+    default: 0,
+    nullable: true,
+  })
+  age: number;
+
+  @Column({
     name: 'access_token',
     type: 'varchar',
     length: 255,
