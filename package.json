@@ -1,5 +1,5 @@
 {
-  "name": "nestjs-demo",
+  "name": "nestjs-jwt-rbac",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "start-docker": "export NODE_ENV=docker && docker-compose -f ./docker-compose.yml up --build -d",
     "stop-docker": "export NODE_ENV=docker && docker-compose -f ./docker-compose.yml down",
+    "migrate:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n",
     "migrate:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
     "migrate:up": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migrate:down": "ts-node ./node_modules/typeorm/cli.js migration:revert"

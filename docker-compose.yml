@@ -33,7 +33,7 @@ services:
     build: ./docker/mysql
     image: restful-db
     environment:
-      MYSQL_ROOT_PASSWORD: admin@123
+      MYSQL_ROOT_PASSWORD: $RDS_PASSWORD
       MYSQL_DATABASE: $RDS_DATABASE
       MYSQL_USER: $RDS_USERNAME
       MYSQL_PASSWORD: $RDS_PASSWORD

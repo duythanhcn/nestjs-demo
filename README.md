@@ -26,23 +26,66 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
-
+## Account Test
 ```bash
-$ npm install
+Username: ThanhLD
+Password: 11111111
+Url: localhost:3000
 ```
+## .env
+```bash
+APP_NAME=NestJsJwtRbac
+NODE_ENV=LOCAL
+APP_PORT=3000
+APP_DEBUG=false
+APP_URL=
+APP_VERSION=v.1.0
+TIMEZONE_TEXT=
+TIMEZONE_NUM=
 
+# API_KEY
+APP_KEY=api_key_for_app
+
+# JWT
+JWT_SECRET_KEY=insert_when_deploy
+JWT_EXPIRE_TIME=3600
+JWT_REFRESH_TOKEN_EXPIRATION_TIME=3600
+
+# DB
+RDS_CONNECTION=mysql
+RDS_PORT=3306
+RDS_HOST=localhost
+RDS_DATABASE=demo
+RDS_USERNAME=root
+RDS_PASSWORD=P123456789
+```
 ## Running the app
 
+#### Run direct machine
 ```bash
+# Install dependences
+$ yarn install
+
+# run migration
+$ yarn migrate:up
+
 # development
-$ npm run start
+$ yarn start
 
 # watch mode
-$ npm run start:dev
+$ yarn start:dev
 
 # production mode
-$ npm run start:prod
+$ yarn start:prod
+```
+
+#### Run with Docker
+```bash
+# run docker
+$ yarn start-docker
+
+# run migration
+$ yarn migrate:up
 ```
 
 ## Test
