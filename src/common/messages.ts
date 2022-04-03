@@ -3,4 +3,5 @@ export enum ErrorMessage {
   INVALID_ARGUMENTS = 'Invalid Arguments',
   DUPLICATED = 'Duplicated data',
   DATA_NOT_FOUND = 'Data not found',
+  PERMISSION_DENIED = 'Permission denied',
 }

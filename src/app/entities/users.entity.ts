@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
+import { Roles } from './roles.entity';
 
 @Entity('users')
 export class Users {
@@ -70,6 +77,13 @@ export class Users {
     nullable: true,
   })
   refreshToken: string;
+
+  @ManyToOne(() => Roles, (role) => role.roleId, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'role_id' })
+  role: Roles;
 
   constructor(attributes: Partial<Users> = {}) {
     Object.assign(this, attributes);

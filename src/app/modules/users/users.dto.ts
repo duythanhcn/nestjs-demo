@@ -13,6 +13,16 @@ export class CreateUserInputDto {
   firstName: string;
   address: string;
   age: number;
+  role: string;
+}
+
+export class RegisterInputDto {
+  userName: string;
+  password: string;
+  lastName: string;
+  firstName: string;
+  address: string;
+  age: number;
 }
 
 export class UpdateUserInputDto {
@@ -22,6 +32,7 @@ export class UpdateUserInputDto {
   firstName?: string;
   address?: string;
   age?: number;
+  role?: string;
 }
 
 export class DeleteUserInputDto {

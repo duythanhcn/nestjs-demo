@@ -1,7 +1,7 @@
 import { Controller, Request, Post, UseGuards, Body } from '@nestjs/common';
 import { BaseController } from '../../../common/base/base.controller';
-import { CreateUserInputDto } from '../users/users.dto';
-import { CreateUsersPipe } from '../users/users.pipe';
+import { RegisterInputDto } from '../users/users.dto';
+import { RegisterPipe } from '../users/users.pipe';
 import { AuthenService } from './authen.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { LocalAuthenGuard } from './local-authen.guard';
@@ -13,7 +13,7 @@ export class AuthenController extends BaseController {
   }
 
   @Post('auth/register')
-  async register(@Body(new CreateUsersPipe()) body: CreateUserInputDto) {
+  async register(@Body(new RegisterPipe()) body: RegisterInputDto) {
     await this.authenService.register(body);
     return this.response();
   }
