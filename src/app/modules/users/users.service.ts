@@ -7,14 +7,20 @@ import {
   CreateUserInputDto,
   DeleteUserInputDto,
   GetUserInputDto,
+  RegisterInputDto,
   UpdateUserInputDto,
   UserDataResponse,
   UserLogin,
 } from './users.dto';
+import { RolesService } from '../roles/roles.service';
+import { RolesEnum } from '../../../common/constants';
 
 @Injectable()
 export class UsersService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private rolesService: RolesService,
+  ) {}
 
   /**
    *
@@ -69,6 +75,32 @@ export class UsersService {
       user.lastName = data.lastName;
       user.address = data.address;
       user.age = data.age;
+      user.role = await this.rolesService.getRoleByName(data.role);
+      this.usersRepository.save(user);
+      return;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  /**
+   *
+   * @param data
+   * @returns
+   */
+  async register(data: RegisterInputDto) {
+    try {
+      if (await this.checkUserByUserName(data.userName)) {
+        throw new BadRequestException(ErrorMessage.DUPLICATED);
+      }
+      const user = new Users();
+      user.userName = data.userName;
+      user.password = data.password;
+      user.firstName = data.firstName;
+      user.lastName = data.lastName;
+      user.address = data.address;
+      user.age = data.age;
+      user.role = await this.rolesService.getRoleByName(RolesEnum.GUEST);
       this.usersRepository.save(user);
       return;
     } catch (e) {
@@ -101,6 +133,9 @@ export class UsersService {
       }
       if (data.age) {
         user.age = data.age;
+      }
+      if (data.role) {
+        user.role = await this.rolesService.getRoleByName(data.role);
       }
       return await this.usersRepository.save(user);
     } catch (e) {
@@ -209,5 +244,36 @@ export class UsersService {
     } catch (e) {
       throw e;
     }
+  }
+
+  /**
+   *
+   * @param userId
+   * @returns string[]
+   */
+  async getUserPermissions(userId: number): Promise<string[]> {
+    try {
+      return await this.usersRepository.getUserPermissions(userId);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  /**
+   *
+   * @param userId
+   * @param role : RolesEnum
+   * @returns
+   */
+  async checkUserPermission(userId: number, role: RolesEnum): Promise<boolean> {
+    const user = await this.usersRepository.getUserRole(userId);
+    if (!user || (user && !user.role)) {
+      throw new BadRequestException(ErrorMessage.DATA_NOT_FOUND);
+    }
+    const userRole = user.role;
+    if (userRole.roleName == role) {
+      return true;
+    }
+    return false;
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as moment from 'moment';
-import { CreateUserInputDto, UserLogin } from '../users/users.dto';
+import { RegisterInputDto, UserLogin } from '../users/users.dto';
 import { UsersService } from '../users/users.service';
 import { LoginRequestDto, LoginResponseDto } from './authen.dto';
 require('dotenv').config();
@@ -35,7 +35,7 @@ export class AuthenService {
         .toISOString();
       // update access token in DB
       // just for demo without redis
-      await this.usersService.login(payload.userId, user.password, accessToken);
+      await this.usersService.login(payload.userId, accessToken, null);
       return {
         user: { userId: user.userId, userName: user.userName },
         auth: {
@@ -51,11 +51,11 @@ export class AuthenService {
 
   /**
    *
-   * @param params CreateUserInputDto
+   * @param params RegisterInputDto
    */
-  async register(params: CreateUserInputDto): Promise<any> {
+  async register(params: RegisterInputDto): Promise<any> {
     try {
-      await this.usersService.addUSer(params);
+      await this.usersService.register(params);
     } catch (e) {
       throw e;
     }

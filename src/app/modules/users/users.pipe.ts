@@ -1,9 +1,11 @@
 import { ArgumentMetadata } from '@nestjs/common';
 import * as Joi from 'joi';
+import { RolesEnum } from '../../../common/constants';
 import { JoiValidationPipe } from '../../../common/pipe/joiValidation.pipe';
 import {
   CreateUserInputDto,
   GetUserInputDto,
+  RegisterInputDto,
   UpdateUserInputDto,
 } from './users.dto';
 
@@ -18,6 +20,9 @@ export class CreateUsersPipe extends JoiValidationPipe {
         firstName: Joi.string().required(),
         address: Joi.string().required(),
         age: Joi.number().required().min(1),
+        role: Joi.string()
+          .required()
+          .valid(...Object.values(RolesEnum)),
       }),
     );
   }
@@ -42,6 +47,7 @@ export class UpdateUsersPipe extends JoiValidationPipe {
         firstName: Joi.string(),
         address: Joi.string(),
         age: Joi.number().min(1),
+        role: Joi.string().valid(...Object.values(RolesEnum)),
       }),
     );
   }
@@ -88,6 +94,26 @@ export class GetUsersPipe extends JoiValidationPipe {
 
   transform(value: GetUserInputDto, _metadata: ArgumentMetadata) {
     const validatedValue: GetUserInputDto = super.transform(value, _metadata);
+    return validatedValue;
+  }
+}
+
+export class RegisterPipe extends JoiValidationPipe {
+  constructor() {
+    super(
+      Joi.object<RegisterInputDto>({
+        userName: Joi.string().required(),
+        password: Joi.string().required(),
+        lastName: Joi.string().required(),
+        firstName: Joi.string().required(),
+        address: Joi.string().required(),
+        age: Joi.number().required().min(1),
+      }),
+    );
+  }
+
+  transform(value: RegisterInputDto, _metadata: ArgumentMetadata) {
+    const validatedValue: RegisterInputDto = super.transform(value, _metadata);
     return validatedValue;
   }
 }
