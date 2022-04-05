@@ -185,7 +185,7 @@ export class UsersService {
    * @param userName
    * @returns
    */
-  async getUserByName(userName: string): Promise<UserLogin> {
+  async getUserByName(userName: string): Promise<Users> {
     try {
       const user = await this.usersRepository.getUserByName(userName);
       return user;
@@ -199,7 +199,7 @@ export class UsersService {
    * @param userId
    * @returns
    */
-  async getUserById(userId: number): Promise<UserLogin> {
+  async getUserById(userId: number): Promise<Users> {
     try {
       const user = await this.usersRepository.findOne(userId);
       return user;
