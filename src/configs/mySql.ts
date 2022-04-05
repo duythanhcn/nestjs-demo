@@ -15,7 +15,7 @@ export default {
   synchronize: false, // must be false in production
   migrationsRun: true,
   entities: [path.join(__dirname, '..', '/**/*.entity{.ts,.js}')],
-  migrations: ['src/migration/*.ts', 'dist/migration/*{.ts,.js}'],
+  migrations: [path.join(__dirname, '..','/migration/*.ts')],
   cli: {
     entitiesDir: 'src/app/entities',
     migrationsDir: 'src/migration',
