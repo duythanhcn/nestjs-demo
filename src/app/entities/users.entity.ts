@@ -25,7 +25,7 @@ export class Users {
   password: string;
 
   @Column({
-    name: 'lasst_name',
+    name: 'last_name',
     type: 'varchar',
     length: 255,
     default: null,

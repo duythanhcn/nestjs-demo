@@ -16,7 +16,7 @@ services:
       RDS_USERNAME: $RDS_USERNAME
       RDS_PASSWORD: $RDS_PASSWORD
       RDS_DATABASE: $RDS_DATABASE
-      RDS_HOST: $RDS_HOST
+      RDS_HOST: db
     ports:
       - 3000:$APP_PORT
     volumes:
@@ -32,11 +32,15 @@ services:
   db:
     build: ./docker/mysql
     image: restful-db
+    env_file: .env
+    container_name: db
+
     environment:
-      MYSQL_ROOT_PASSWORD: $RDS_PASSWORD
+      # using db root account
+      MYSQL_ROOT_PASSWORD: $RDS_PASSWORD 
       MYSQL_DATABASE: $RDS_DATABASE
-      MYSQL_USER: $RDS_USERNAME
-      MYSQL_PASSWORD: $RDS_PASSWORD
+      # MYSQL_USER: $RDS_USERNAME
+      # MYSQL_PASSWORD: $RDS_PASSWORD
     ports:
       - 3306:3306
     networks:
